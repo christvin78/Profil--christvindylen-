@@ -41,27 +41,23 @@ const eyeVariants = {
   },
 };
 
-const flyingTextVariants = {
-  initial: { y: 0, opacity: 1 },
+const avatarRotateInfinite = {
   animate: {
-    y: [0, -8, 0, 8, 0],
-    opacity: [1, 0.7, 1, 0.7, 1],
+    rotate: 360,
     transition: {
-      duration: 6,
       repeat: Infinity,
-      ease: "easeInOut",
+      duration: 20,
+      ease: "linear",
     },
   },
 };
 
 export default function Page() {
-  // Hanya satu profil
   const [students, setStudents] = useState([
     {
       id: 1,
-      fullName: "John Doe",
-      description:
-        "Creative and passionate Computer Science student specializing in modern web development, UI/UX design, and interactive experiences.",
+      fullName: "CHRISTVIN DYLEN",
+      description: "Saya Adalah Anak Yang Berbakat",
       avatar: null,
     },
   ]);
@@ -134,7 +130,8 @@ export default function Page() {
           key={student.id}
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          whileHover={{ rotate: 360 }}
+          transition={{ type: "spring", stiffness: 100, damping: 15 }}
           style={{ width: "100%", maxWidth: "420px" }}
         >
           <motion.div
@@ -169,17 +166,23 @@ export default function Page() {
                   position: "relative",
                 }}
               >
-                <Avatar
-                  size={100}
-                  src={student.avatar}
-                  icon={!student.avatar && <UserOutlined />}
-                  style={{
-                    border: "3px solid white",
-                    backgroundColor: "#f0f0f0",
-                    position: "relative",
-                    zIndex: 2,
-                  }}
-                />
+                <motion.div
+                  animate={avatarRotateInfinite.animate}
+                  style={{ display: "inline-block" }}
+                >
+                  <Avatar
+                    size={100}
+                    src={student.avatar}
+                    icon={!student.avatar && <UserOutlined />}
+                    style={{
+                      border: "3px solid white",
+                      backgroundColor: "#f0f0f0",
+                      position: "relative",
+                      zIndex: 2,
+                    }}
+                  />
+                </motion.div>
+
                 {!student.avatar && (
                   <>
                     <motion.div
@@ -216,11 +219,11 @@ export default function Page() {
                 )}
               </motion.div>
 
-              {/* Animasi tulisan terbang dan getar halus */}
+              {/* Teks nama dan deskripsi dengan animasi rotasi saat hover */}
               <motion.div
-                variants={flyingTextVariants}
-                initial="initial"
-                animate="animate"
+                initial={{ rotate: 0 }}
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 1, ease: "easeInOut" }}
               >
                 <Title
                   level={2}
@@ -246,7 +249,7 @@ export default function Page() {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.1, rotate: 360 }}
                 >
                   <Button
                     type="primary"
@@ -265,7 +268,7 @@ export default function Page() {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.1, rotate: 360 }}
                 >
                   <Button
                     type="primary"
